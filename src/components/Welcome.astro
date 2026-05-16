@@ -4,15 +4,16 @@ import { Image } from "astro:assets";
 import Iso from "../assets/iso_negro_bold.png";
 import Logo from "../assets/logo_negro_bold.png";
 import Hand from "../assets/mobile-hand.png";
+import Pet from "../assets/pet-tucuate.png";
 ---
 
 <div class="canvas">
+  <!-- El SVG ahora tiene una clase específica para ocultarlo en móviles -->
   <svg
-    class="shape-background"
+    class="shape-background desktop-only"
     viewBox="0 0 800 500"
     preserveAspectRatio="none"
   >
-    <!-- 1. Definimos el degradado dentro del SVG -->
     <defs>
       <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="32.32%" stop-color="#360c75"></stop>
@@ -63,18 +64,32 @@ import Hand from "../assets/mobile-hand.png";
   </svg>
 
   <div class="content-wrapper">
-    <div class="clipped-content">
+    <!-- Oculto en móviles también -->
+    <div class="clipped-content desktop-only">
       <Image src={Hand} alt="Mano con celular" class="hand" />
     </div>
+
     <div class="ui-elements">
-      <Image src={Iso} alt="Description of the image" class="iso" />
+      <Image src={Iso} alt="Iso Tu Cuate" class="iso" />
+
+      <!-- Menú Hamburguesa con CSS Puro -->
+      <input type="checkbox" id="menu-toggle" class="menu-checkbox" />
+      <label for="menu-toggle" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
       <nav class="nav">
         <a class="nav-link" href="">Inicio</a>
         <a class="nav-link" href="">Entregas</a>
         <a class="nav-link" href="">Contacto</a>
         <a class="nav-link" href="">Acerca de</a>
+        <!-- Duplicamos el botón de recarga dentro del menú móvil para mejorar UX -->
+        <a href="" class="nav-link mobile-only menu-pill">Puntos de recarga</a>
       </nav>
-      <div class="pill pill-orange">
+
+      <div class="pill pill-orange desktop-only">
         <a href="" class="pill-link">Puntos de recarga</a>
       </div>
     </div>
@@ -90,13 +105,11 @@ import Hand from "../assets/mobile-hand.png";
         <a href="#" class="btn-outline">Accede a la web</a>
       </div>
     </div>
+    <Image src={Pet} alt="Mascota Tu Cuate" class="pet" />
 
     <p class="branding">
-      Desliza y descubre mas de <Image
-        src={Logo}
-        alt="Description of the image"
-        class="logo"
-      />
+      Desliza y descubre mas de
+      <Image src={Logo} alt="Logo Tu Cuate" class="logo" />
     </p>
     <p class="slogan">Recarga, crece y comparte</p>
   </div>
@@ -111,10 +124,14 @@ import Hand from "../assets/mobile-hand.png";
 
   body {
     background-color: #fdfcf5;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family:
+      system-ui,
+      -apple-system,
+      sans-serif;
   }
 
   .canvas {
@@ -127,7 +144,6 @@ import Hand from "../assets/mobile-hand.png";
   }
 
   .shape-path {
-    /* Llamamos al ID que creamos en el HTML */
     fill: url(#purpleGradient);
     stroke: #000;
   }
@@ -148,6 +164,8 @@ import Hand from "../assets/mobile-hand.png";
     width: 100%;
     height: 100%;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
   }
 
   .clipped-content {
@@ -157,7 +175,7 @@ import Hand from "../assets/mobile-hand.png";
     width: 100%;
     height: 100%;
     clip-path: url(#svgClip);
-    pointer-events: none; /* Evita que una caja invisible bloquee clicks */
+    pointer-events: none;
   }
 
   .ui-elements {
@@ -168,6 +186,29 @@ import Hand from "../assets/mobile-hand.png";
     align-items: center;
     margin-top: 15px;
     padding: 0 40px;
+    z-index: 200;
+  }
+
+  /* Control de visibilidad del menú hamburguesa */
+  .menu-checkbox {
+    display: none;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    padding: 10px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #000;
+    border-radius: 2px;
+    transition: all 0.3s ease;
   }
 
   .hand {
@@ -200,12 +241,20 @@ import Hand from "../assets/mobile-hand.png";
     transition: color 0.3s ease;
   }
 
+  .nav-link:hover {
+    color: #de3b62;
+  }
+
   .iso {
     position: absolute;
     top: 1em;
     left: 4%;
     width: 120px;
     height: auto;
+  }
+
+  .pet {
+    display: none;
   }
 
   .branding {
@@ -225,7 +274,6 @@ import Hand from "../assets/mobile-hand.png";
 
   .slogan {
     position: absolute;
-    font-weight: 100;
     bottom: 0.5em;
     left: 5%;
     font-size: 4em;
@@ -246,17 +294,6 @@ import Hand from "../assets/mobile-hand.png";
     vertical-align: middle;
   }
 
-  .pill {
-    height: 24px;
-    border-radius: 12px;
-  }
-
-  .pill-white {
-    width: 50%;
-    max-width: 380px;
-    background-color: #ffffff;
-  }
-
   .pill-orange {
     position: absolute;
     top: 2em;
@@ -268,7 +305,6 @@ import Hand from "../assets/mobile-hand.png";
     display: flex;
     justify-content: center;
     align-items: center;
-	
   }
 
   .pill-link {
@@ -276,7 +312,6 @@ import Hand from "../assets/mobile-hand.png";
     font-weight: 500;
     color: white;
     text-decoration: none;
-    transition: color 0.3s ease;
   }
 
   .hero-content {
@@ -323,56 +358,183 @@ import Hand from "../assets/mobile-hand.png";
   }
 
   .btn-outline:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #be2e51;
   }
 
-  /* .branding {
-    position: absolute;
-    bottom: 50px;
-    right: 5%;
-    font-size: 1.5em;
-    width: 300px;
-    font-weight: 500;
-    color: black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-	justify-content: center;
-    letter-spacing: 0.5px;
-  } */
-
-  .logo-face {
-    display: inline-block;
-    position: relative;
-    width: 18px;
-    height: 18px;
-    margin: 0 3px;
+  .mobile-only {
+    display: none;
   }
 
-  .logo-face .eye {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background-color: #fff;
-    border-radius: 50%;
-    top: 4px;
-  }
+  /* ==========================================================================
+     MEDIA QUERY: MÓVILES Y TABLETAS (Responsive)
+     ========================================================================== */
+  @media (max-width: 768px) {
+    .desktop-only {
+      display: none !important;
+    }
 
-  .logo-face .eye.left {
-    left: 3px;
-  }
-  .logo-face .eye.right {
-    right: 3px;
-  }
+    .mobile-only {
+      display: block;
+    }
 
-  .logo-face .mouth {
-    position: absolute;
-    width: 12px;
-    height: 6px;
-    border-bottom: 2px solid #fff;
-    border-radius: 0 0 12px 12px;
-    bottom: 3px;
-    left: 3px;
-    box-sizing: border-box;
+    .pet {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80vw;
+      height: auto;
+      z-index: 100;
+    }
+    .canvas {
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(
+        135deg,
+        #360c75 32%,
+        rgba(54, 12, 117, 0.88) 60%,
+        rgba(54, 12, 117, 0.74) 94%
+      );
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-wrapper {
+      position: relative;
+      padding: 20px;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    .ui-elements {
+      padding: 0;
+      margin-top: 5px;
+    }
+
+    .iso {
+      position: static;
+      width: 90px;
+      /* Invertimos el color para que contraste con el fondo morado */
+      filter: brightness(0) invert(1);
+    }
+
+    /* Activación del botón Hamburguesa */
+    .hamburger {
+      display: flex;
+      position: relative;
+      z-index: 210;
+    }
+
+    /* Cambiar color de hamburguesa a blanco por el fondo oscuro */
+    .hamburger span {
+      background-color: #fff;
+    }
+
+    /* Comportamiento del menú desplegable móvil */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 100%;
+      width: 100vw;
+      height: 100vh;
+      border-radius: 0;
+      background-color: #360c75;
+      flex-direction: column;
+      justify-content: center;
+      gap: 30px;
+      transition: left 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
+      z-index: 200;
+    }
+
+    .nav-link {
+      color: #fff;
+      font-size: 1.8em;
+    }
+
+    .menu-pill {
+      background-color: #dc9b32;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 1.2em;
+    }
+
+    /* Animación e Interacción de apertura de menú */
+    .menu-checkbox:checked ~ .nav {
+      left: 0;
+    }
+
+    .menu-checkbox:checked ~ .hamburger span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+
+    .menu-checkbox:checked ~ .hamburger span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-checkbox:checked ~ .hamburger span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+
+    /* Ajustes de contenido Hero */
+    .hero-content {
+      position: static;
+      margin-top: 60px;
+      max-width: 100%;
+      align-items: center;
+      text-align: center;
+      gap: 25px;
+    }
+
+    .hero-logo {
+      width: 85%;
+      max-width: 340px;
+    }
+
+    .hero-description {
+      font-size: 1.2em;
+      padding: 0 10px;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-outline {
+      width: 80%;
+      max-width: 280px;
+      height: 45px;
+    }
+
+    /* Adaptación de Textos Inferiores */
+    .branding {
+      position: static;
+      width: 100%;
+      justify-content: center;
+      color: #fff;
+      font-size: 1em;
+      margin-top: auto;
+      padding-top: 30px;
+    }
+
+    .branding .logo {
+      width: 100px;
+      filter: brightness(0) invert(1);
+    }
+
+    .slogan {
+      display: none;
+      position: static;
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.5em;
+      margin-top: 10px;
+      padding-bottom: 10px;
+    }
   }
 </style>
