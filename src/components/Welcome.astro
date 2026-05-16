@@ -1,4 +1,317 @@
 ---
+import { Image } from "astro:assets";
 
+import Iso from "../assets/iso_negro_bold.png";
+import Logo from "../assets/logo_negro_bold.png";
+import Hand from "../assets/mobile-hand.png";
 ---
-<h1>Welcome to Tu Cuate</h1>
+
+<div class="canvas">
+  <svg
+    class="shape-background"
+    viewBox="0 0 800 500"
+    preserveAspectRatio="none"
+  >
+    <!-- 1. Definimos el degradado dentro del SVG -->
+    <defs>
+      <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="32.32%" stop-color="#360c75"></stop>
+        <stop offset="60.19%" stop-color="#360c75" stop-opacity="0.88"></stop>
+        <stop offset="93.99%" stop-color="#360c75" stop-opacity="0.74"></stop>
+      </linearGradient>
+
+      <clipPath id="svgClip" clipPathUnits="objectBoundingBox">
+        <path
+          transform="scale(0.00125, 0.002)"
+          d="
+            M 120 20 
+            H 760 A 20 20 0 0 1 780 40 
+            V 360 A 20 20 0 0 1 760 380 
+            H 640 A 20 20 0 0 0 620 400 
+            V 460 A 20 20 0 0 1 600 480 
+            H 420 A 20 20 0 0 1 400 460 
+            V 400 A 20 20 0 0 0 380 380 
+            H 40 A 20 20 0 0 1 20 360 
+            V 80 A 20 20 0 0 1 40 60 
+            H 80 A 20 20 0 0 0 100 40 
+            A 20 20 0 0 1 120 20 
+            Z"
+        ></path>
+      </clipPath>
+    </defs>
+
+    <path
+      d="
+        M 120 20 
+        H 760 A 20 20 0 0 1 780 40 
+        V 360 A 20 20 0 0 1 760 380 
+        H 640 A 20 20 0 0 0 620 400 
+        V 460 A 20 20 0 0 1 600 480 
+        H 420 A 20 20 0 0 1 400 460 
+        V 400 A 20 20 0 0 0 380 380 
+        H 40 A 20 20 0 0 1 20 360 
+        V 80 A 20 20 0 0 1 40 60 
+        H 80 A 20 20 0 0 0 100 40 
+        A 20 20 0 0 1 120 20 
+        Z"
+      class="shape-path"
+      stroke-width="1"
+      stroke-linejoin="round"
+      vector-effect="non-scaling-stroke"
+    >
+    </path>
+  </svg>
+
+  <div class="content-wrapper">
+    <div class="clipped-content">
+      <Image src={Hand} alt="Mano con celular" class="hand" />
+    </div>
+    <div class="ui-elements">
+      <Image src={Iso} alt="Description of the image" class="iso" />
+      <nav class="nav">
+        <a class="nav-link" href="">Inicio</a>
+        <a class="nav-link" href="">Entregas</a>
+        <a class="nav-link" href="">Contacto</a>
+        <a class="nav-link" href="">Acerca de</a>
+      </nav>
+      <div class="pill pill-orange"></div>
+    </div>
+
+    <div class="hero-content">
+      <Image src={Logo} alt="Logo Grande Tu Cuate" class="hero-logo" />
+      <p class="hero-description">
+        Tu plataforma digital para revender y generar ingresos desde donde
+        estés.
+      </p>
+      <div class="hero-buttons">
+        <a href="#" class="btn-outline"></a>
+        <a href="#" class="btn-outline"></a>
+      </div>
+    </div>
+
+    <p class="branding">
+      Desliza y descubre mas de <Image
+        src={Logo}
+        alt="Description of the image"
+        class="logo"
+      />
+    </p>
+    <p class="slogan">Recarga, crece y comparte</p>
+  </div>
+</div>
+
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #fdfcf5;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .canvas {
+    position: relative;
+    width: calc(100vw - 100px);
+    height: calc(100vh - 1px);
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .shape-path {
+    /* Llamamos al ID que creamos en el HTML */
+    fill: url(#purpleGradient);
+    stroke: #000;
+  }
+
+  .shape-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .content-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  }
+
+  .clipped-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: url(#svgClip);
+    pointer-events: none; /* Evita que una caja invisible bloquee clicks */
+  }
+
+  .ui-elements {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding: 0 40px;
+  }
+
+  .hand {
+    position: absolute;
+    right: 7%;
+    bottom: 10%;
+    width: 50em;
+    height: auto;
+    z-index: 100;
+  }
+
+  .nav {
+    position: absolute;
+    top: 2em;
+    left: 15%;
+    width: 40em;
+    height: 40px;
+    border-radius: 100px;
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .nav-link {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .iso {
+    position: absolute;
+    top: 1em;
+    left: 4%;
+    width: 120px;
+    height: auto;
+  }
+
+  .branding {
+    position: absolute;
+    bottom: 50px;
+    right: 5%;
+    font-size: 1.5em;
+    width: 300px;
+    font-weight: 500;
+    color: black;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .slogan {
+    position: absolute;
+    font-weight: 100;
+    bottom: 0.5em;
+    left: 5%;
+    font-size: 4em;
+    width: 600px;
+    font-weight: 400;
+    color: black;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .logo {
+    width: 150px;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .pill {
+    height: 24px;
+    border-radius: 12px;
+  }
+
+  .pill-white {
+    width: 50%;
+    max-width: 380px;
+    background-color: #ffffff;
+  }
+
+  .pill-orange {
+    position: absolute;
+    top: 2em;
+    right: 4%;
+    width: 10em;
+    height: 40px;
+    border-radius: 100px;
+    background-color: #dc9b32;
+  }
+
+  /* .branding {
+    position: absolute;
+    bottom: 50px;
+    right: 5%;
+    font-size: 1.5em;
+    width: 300px;
+    font-weight: 500;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+	justify-content: center;
+    letter-spacing: 0.5px;
+  } */
+
+  .logo-face {
+    display: inline-block;
+    position: relative;
+    width: 18px;
+    height: 18px;
+    margin: 0 3px;
+  }
+
+  .logo-face .eye {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 4px;
+  }
+
+  .logo-face .eye.left {
+    left: 3px;
+  }
+  .logo-face .eye.right {
+    right: 3px;
+  }
+
+  .logo-face .mouth {
+    position: absolute;
+    width: 12px;
+    height: 6px;
+    border-bottom: 2px solid #fff;
+    border-radius: 0 0 12px 12px;
+    bottom: 3px;
+    left: 3px;
+    box-sizing: border-box;
+  }
+</style>
