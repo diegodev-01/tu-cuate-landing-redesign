@@ -1,0 +1,169 @@
+---
+import { Image } from "astro:assets";
+
+import aboutUsPet from "../assets/tu-cuate-pet-v2.png";
+
+interface Props {
+  titulo?: string;
+  descripcion?: string[];
+}
+
+const {
+  titulo = "Acerca de nosotros",
+  descripcion = [
+    "“Tu Cuate” es una plataforma digital que te permite generar ingresos recargando saldo para teléfonos móviles de manera rápida, sencilla y desde cualquier lugar.",
+  ],
+} = Astro.props;
+---
+
+<section class="sobre-nosotros">
+  <div class="tarjeta">
+    <h2 class="titulo">{titulo}</h2>
+    <div class="contenido-wrapper">
+      <div class="contenido" id="typing-contenido"></div>
+      <Image
+        src={aboutUsPet}
+        alt="Sobre nosotros"
+        class="imagen-sobre-nosotros"
+      />
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ descripcion }}>
+  // --- Configuración de velocidad ---
+  const PARRAFO_SPEED = 22; // ms por carácter en los párrafos
+  const PAUSA_ENTRE = 180; // ms de pausa entre bloques
+
+  const contenidoEl = document.getElementById("typing-contenido");
+
+  // Crea los párrafos vacíos de antemano
+  const parrafosEl = descripcion.map(() => {
+    const p = document.createElement("p");
+    p.className = "parrafo";
+    contenidoEl.appendChild(p);
+    return p;
+  });
+
+  // Escribe un string carácter a carácter en un elemento
+  function escribir(elemento, texto, velocidad) {
+    return new Promise((resolve) => {
+      let i = 0;
+      function siguiente() {
+        if (i < texto.length) {
+          elemento.textContent += texto[i];
+          i++;
+          setTimeout(siguiente, velocidad);
+        } else {
+          resolve();
+        }
+      }
+      siguiente();
+    });
+  }
+
+  async function iniciarEscritura() {
+    // Escribe cada párrafo en secuencia directamente al entrar en el viewport
+    for (let i = 0; i < descripcion.length; i++) {
+      parrafosEl[i].classList.add("activo");
+      await escribir(parrafosEl[i], descripcion[i], PARRAFO_SPEED);
+      await new Promise((r) => setTimeout(r, PAUSA_ENTRE / 2));
+    }
+  }
+
+  // Arranca cuando el componente entra en el viewport
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        observer.disconnect();
+        iniciarEscritura();
+      }
+    },
+    { threshold: 0.2 },
+  );
+
+  observer.observe(document.querySelector(".tarjeta"));
+</script>
+
+<style>
+  .sobre-nosotros {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    background-color: #ffffff;
+  }
+
+  .tarjeta {
+    width: 100%;
+    max-width: 100em;
+    border: 1.5px solid #d1d5db;
+    border-radius: 3em;
+    padding: 3rem 3.5rem 3.5rem;
+    background-color: #fff9dd;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  /* ── Título (Simplificado y Estático) ── */
+  .titulo {
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    font-weight: 600;
+    color: #111827;
+    text-align: center;
+    margin: 0 0 2rem 0;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Párrafos (Más grandes y Bold) ── */
+  .contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    font-weight: bold;
+    font-size: 2.5em;
+  }
+
+  .parrafo {
+    font-size: 3em;
+    font-weight: bold;
+    line-height: 1.5;
+    /* Color inicial "fantasma" antes de ser alcanzado por el script */
+    color: #e5e7eb;
+    margin: 0;
+    transition: color 0.25s ease;
+  }
+
+  /* Al activarse pasa a un color oscuro destacado */
+  .parrafo.activo {
+    color: #111827;
+  }
+ .contenido-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* Empuja el texto a la izquierda y la imagen a la derecha */
+    gap: 2.5rem;
+    width: 100%;
+  }
+.imagen-sobre-nosotros {
+    flex-shrink: 0; /* Evita que la imagen se deforme o se encoja */
+    width: 100%;
+    max-width: 280px; /* Tamaño controlado para que quepa bien en la tarjeta */
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .tarjeta {
+      padding: 2rem 1.5rem 2.5rem;
+    }
+    .titulo {
+      font-size: 2.2rem;
+    }
+    .parrafo {
+      font-size: 1.2rem;
+    }
+  }
+</style>
