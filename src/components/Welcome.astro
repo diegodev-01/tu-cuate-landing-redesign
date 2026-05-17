@@ -366,36 +366,40 @@ import PhoneImage from "../assets/phone-image.jpeg";
 
   .branding {
     position: absolute;
-    bottom: 50px;
-    right: 5%;
-    font-size: 1.5em;
-    width: 300px;
+    bottom: clamp(15px, 5vh, 60px);
+    right: 4vw;
+    font-size: clamp(0.9rem, 1.2vw, 1.5rem);
+    width: auto;
+    max-width: 20vw;
     font-weight: 500;
     color: black;
-    display: inline-flex;
-    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     align-items: center;
+    text-align: right;
     gap: 10px;
     letter-spacing: 0.5px;
   }
 
   .slogan {
     position: absolute;
-    bottom: 0.5em;
-    left: 5%;
-    font-size: 4em;
-    width: 600px;
+    bottom: 1.5em;
+    left: 5vw;
+    font-size: clamp(1.5rem, 3vw, 4rem);
+    width: auto;
+    max-width: 50vw;
     font-weight: 400;
     color: black;
-    display: inline-flex;
-    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 10px;
     letter-spacing: 0.5px;
   }
 
   .logo {
-    width: 150px;
+    width: clamp(90px, 10vw, 150px);
     height: auto;
     display: inline-block;
     vertical-align: middle;
