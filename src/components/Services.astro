@@ -1,0 +1,405 @@
+---
+interface MiniServicio {
+    nombre: string;
+    detalle: string;
+}
+
+interface Frame {
+    id: string;
+    titulo: string;
+    imagen?: string;
+    alt?: string;
+    servicios: MiniServicio[];
+}
+
+interface Props {
+    titulo?: string;
+    frames?: Frame[];
+}
+
+const {
+    titulo = "Nuestros servicios",
+    frames = [
+        {
+            id: "personas",
+            titulo: "Para Personas",
+            imagen: "src/assets/fercho_persona.png",
+            alt: "Servicios para personas",
+            servicios: [
+                {
+                    nombre: "Reventa de saldo de las empresas Viva y Entel",
+                    detalle:
+                        "Revende saldo de las empresas Viva y Entel y obtén hasta un 8% en saldo de bonificación que puedes retirar inmediatamente.",
+                },
+                {
+                    nombre: "Reventa de megas de Entel",
+                    detalle:
+                        "Revende paquetes de megas de la empresa Entel y obtén hasta un 6% de beneficio.",
+                },
+                {
+                    nombre: "Capacitaciones para emprendedores",
+                    detalle:
+                        "Accede a las guías actualizadas para ayudarte a incrementar tus ingresos de forma práctica y sencilla.",
+                },
+                {
+                    nombre: "Reventa de tarjetas Entel",
+                    detalle:
+                        "Revende códigos de tarjetas Entel para aquellos clientes que todavía quieren recargar crédito de forma tradicional.",
+                },
+            ],
+        },
+        {
+            id: "empresas",
+            titulo: "Para Empresas",
+            imagen: "src/assets/fercho_empresa.png",
+            alt: "Servicios para empresas",
+            servicios: [
+                {
+                    nombre: "Reventa de saldo de las empresas Viva y Entel",
+                    detalle:
+                        "Revende saldo de las empresas Viva y Entel y obtén hasta un 8% en saldo de bonificación que puedes retirar inmediatamente.",
+                },
+                {
+                    nombre: "Establecimiento de punto de entrega de productos",
+                    detalle:
+                        'Convierte tu negocio en un "Punto Cuate" y recibe beneficios por la entrega de productos.',
+                },
+                {
+                    nombre: "Cobros automáticos por medio de código QR",
+                    detalle:
+                        "Cobra digitalmente a los clientes de tu negocio por medio de códigos QR fáciles de utilizar.",
+                },
+                {
+                    nombre: "Co-marketing y colaboración de marcas",
+                    detalle:
+                        "Lleva a cabo alianzas comerciales para generar contenido digital conjunto y campañas en redes sociales, aprovechando la comunidad masiva, joven y activa que ya tiene Tu Cuate",
+                },
+            ],
+        },
+    ],
+} = Astro.props;
+---
+
+<section class="ns-seccion">
+    <div class="ns-contenedor">
+        <h2 class="ns-titulo">{titulo}</h2>
+
+        <div class="ns-grid">
+            {
+                frames.map((frame) => (
+                    <div class="ns-frame" data-id={frame.id}>
+                        {/* Estado cerrado: imagen centrada + label */}
+                        <div class="ns-cerrado">
+                            <div class="ns-imagen-wrap">
+                                {frame.imagen ? (
+                                    <img
+                                        src={frame.imagen}
+                                        alt={frame.alt ?? frame.titulo}
+                                        class="ns-img"
+                                    />
+                                ) : (
+                                    <div class="ns-placeholder" />
+                                )}
+                            </div>
+                            <span class="ns-label">{frame.titulo}</span>
+                        </div>
+
+                        {/* Estado abierto (glass): mini servicios */}
+                        <div class="ns-abierto">
+                            <p class="ns-label-glass">{frame.titulo}</p>
+                            <ul class="ns-lista">
+                                {frame.servicios.map((s) => (
+                                    <li class="ns-item">
+                                        <span class="ns-nombre">
+                                            {s.nombre}
+                                        </span>
+                                        <div class="ns-tooltip">
+                                            {s.detalle}
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                            <button class="ns-cerrar" aria-label="Cerrar">
+                                ✕
+                            </button>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<script>
+    document.querySelectorAll<HTMLElement>(".ns-frame").forEach((frame) => {
+        // Abrir al hacer click en el frame cerrado
+        frame.querySelector(".ns-cerrado")!.addEventListener("click", () => {
+            frame.classList.add("abierto");
+        });
+
+        // Cerrar con el botón ✕
+        frame.querySelector(".ns-cerrar")!.addEventListener("click", (e) => {
+            e.stopPropagation();
+            frame.classList.remove("abierto");
+        });
+    });
+</script>
+
+<style>
+    /* ── Paleta ── */
+    :root {
+        --ns-purple: #5c1fd4;
+        --ns-purple-dark: #2d0a6e;
+        --ns-red: #c9243c;
+        --ns-amber: #fbbf24;
+        --ns-bg: #ede9f6;
+        --ns-white: #ffffff;
+        --ns-border: rgba(255, 255, 255, 0.28);
+    }
+
+    /* ── Sección ── */
+    .ns-seccion {
+        width: 90%;
+        background-color: var(--ns-white);
+    }
+
+    .ns-contenedor {
+        width: 100%;
+        padding: 3.5rem 5vw 4.5rem;
+        background-color: var(--ns-white);
+    }
+
+    /* ── Título sección ── */
+    .ns-titulo {
+        font-size: clamp(2.8rem, 5.5vw, 4rem);
+        font-weight: 600;
+        color: #111827;
+        text-align: center;
+        margin: 0 0 3rem;
+    }
+
+    /* ── Grid de frames ── */
+    .ns-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+    }
+
+    /* ── Frame base ── */
+    .ns-frame {
+        position: relative;
+        border: 1.5px solid #d1d5db;
+        border-radius: 16px;
+        aspect-ratio: 1 / 1;
+        cursor: pointer;
+        background: var(--ns-white);
+        transition: box-shadow 0.25s ease;
+    }
+
+    .ns-frame:hover {
+        box-shadow: 0 6px 24px rgba(75, 15, 171, 0.15);
+    }
+
+    /* ── Estado CERRADO ── */
+    .ns-cerrado {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: 2rem;
+        transition: opacity 0.3s ease;
+    }
+
+    .ns-frame.abierto .ns-cerrado {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .ns-imagen-wrap {
+        width: 55%;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ns-img {
+        width: 100%;
+        height: 30em;
+        object-fit: contain;
+    }
+
+    /* Rombo placeholder igual al wireframe */
+    .ns-placeholder {
+        width: 100%;
+        height: 100%;
+        border: 2px solid var(--ns-red);
+        border-radius: 8px;
+        transform: rotate(45deg) scale(0.75);
+    }
+
+    .ns-label {
+        font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+        font-weight: 700;
+        color: var(--ns-red);
+        letter-spacing: 0.01em;
+    }
+
+    /* ── Estado ABIERTO (glassmorphism) ── */
+    .ns-abierto {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 1.75rem;
+        gap: 0.75rem;
+
+        /* glass */
+        background: linear-gradient(
+            135deg,
+            rgba(92, 31, 212, 0.85) 0%,
+            rgba(45, 10, 110, 0.92) 100%
+        );
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border: 1px solid var(--ns-border);
+        border-radius: 14px;
+
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .ns-frame.abierto .ns-abierto {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .ns-label-glass {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--ns-amber);
+        margin: 0 0 0.25rem;
+        letter-spacing: 0.02em;
+        text-align: center;
+    }
+
+    /* ── Lista de mini servicios ── */
+    .ns-lista {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        flex: 1;
+    }
+
+    /* ── Cada mini servicio ── */
+    .ns-item {
+        position: relative;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 10px;
+        padding: 0.7rem 1rem;
+        cursor: default;
+        transition: background 0.2s ease;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ns-item:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .ns-nombre {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--ns-white);
+        pointer-events: none;
+        text-align: center;
+    }
+
+    /* ── Tooltip de detalle ── */
+    .ns-tooltip {
+        position: absolute;
+        bottom: calc(100% + 10px);
+        left: 50%;
+        transform: translateX(-50%) translateY(6px);
+        width: max-content;
+        max-width: 260px;
+        background: var(--ns-purple-dark);
+        color: var(--ns-white);
+        font-size: 0.88rem;
+        line-height: 1.5;
+        padding: 0.7rem 1rem;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+            opacity 0.2s ease,
+            transform 0.2s ease;
+        z-index: 10;
+        text-align: center;
+    }
+
+    /* Flecha del tooltip */
+    .ns-tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: var(--ns-purple-dark);
+    }
+
+    .ns-item:hover .ns-tooltip {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── Botón cerrar ── */
+    .ns-cerrar {
+        position: absolute;
+        top: 0.85rem;
+        right: 0.85rem;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        color: var(--ns-white);
+        font-size: 0.8rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s ease;
+    }
+
+    .ns-cerrar:hover {
+        background: rgba(201, 36, 60, 0.7);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+        .ns-contenedor {
+            padding: 2.5rem 1.25rem 3rem;
+        }
+        .ns-titulo {
+            font-size: 2.4rem;
+        }
+        .ns-tooltip {
+            max-width: 190px;
+            font-size: 0.8rem;
+        }
+    }
+</style>
