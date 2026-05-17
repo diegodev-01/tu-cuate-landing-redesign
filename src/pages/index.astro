@@ -11,7 +11,32 @@ import '../styles/globals.css';
 
 <Layout title="Tu cuate" class="layout">
 	<Welcome />
+	<section id="entregas" class="placeholder-section">
+		<h2>Entregas</h2>
+		<p>Información de entregas próximamente.</p>
+	</section>
 	<AboutUs client:visible/>
 	<Advantages />
+	<section id="puntos-recarga" class="placeholder-section">
+		<h2>Puntos de Recarga</h2>
+		<p>Encuentra tu punto más cercano próximamente.</p>
+	</section>
 	<Footer />
 </Layout>
+
+<style>
+	.placeholder-section {
+		padding: 8rem 2rem;
+		text-align: center;
+		background-color: #fdfcf5;
+	}
+	.placeholder-section h2 {
+		font-size: 3rem;
+		color: #111827;
+		margin-bottom: 1rem;
+	}
+	.placeholder-section p {
+		font-size: 1.5rem;
+		color: #6b7280;
+	}
+</style>

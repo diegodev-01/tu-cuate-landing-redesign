@@ -24,6 +24,7 @@ html, body {
     padding: 0;
     font-family: 'optika', sans-serif, inter;
     font-weight: normal;
+    scroll-behavior: smooth;
 }
 
 body {

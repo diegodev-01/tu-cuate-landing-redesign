@@ -16,7 +16,7 @@ const {
 } = Astro.props;
 ---
 
-<section class="sobre-nosotros">
+<section class="sobre-nosotros" id="acerca-de">
   <div class="tarjeta">
     <h2 class="titulo">{titulo}</h2>
     <div class="contenido-wrapper">
@@ -79,7 +79,7 @@ const {
         iniciarEscritura();
       }
     },
-    { threshold: 0.2 },
+    { threshold: 0.5 },
   );
 
   observer.observe(document.querySelector(".tarjeta"));
