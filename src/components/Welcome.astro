@@ -88,7 +88,7 @@ import PhoneImage from "../assets/phone-image.jpeg";
           <a class="nav-link" href="#inicio">Inicio</a>
           <a class="nav-link" href="#acerca-de">Acerca de</a>
           <a class="nav-link" href="#ventajas">Ventajas</a>
-          <a class="nav-link" href="#entregas">Nuestros Servicios</a>
+          <a class="nav-link" href="#servicios">Nuestros Servicios</a>
           <a class="nav-link" href="#contacto">Contacto</a>
         </nav>
 
@@ -104,8 +104,18 @@ import PhoneImage from "../assets/phone-image.jpeg";
           estés.
         </p>
         <div class="hero-buttons">
-          <a href="#" class="btn-outline">Descarga la app</a>
-          <a href="#" class="btn-outline">Accede a la web</a>
+          <a
+            href="https://play.google.com/store/search?q=tu%20cuate&c=apps&hl=es_419"
+            class="btn-outline"
+            target="_blank"
+            rel="noopener noreferrer">Descarga la app</a
+          >
+          <a
+            href="http://app.tucuate.com/"
+            class="btn-outline"
+            target="_blank"
+            rel="noopener noreferrer">Accede a la web</a
+          >
         </div>
       </div>
       <Image src={Pet} alt="Mascota Tu Cuate" class="pet" />
@@ -141,7 +151,7 @@ import PhoneImage from "../assets/phone-image.jpeg";
 
   // Cerrar menú móvil al hacer click
   const menuCheckbox = document.getElementById(
-    "menu-toggle"
+    "menu-toggle",
   ) as HTMLInputElement;
   const navLinks = document.querySelectorAll(".nav-link");
   navLinks.forEach((link) => {
@@ -164,7 +174,10 @@ import PhoneImage from "../assets/phone-image.jpeg";
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family:
+      system-ui,
+      -apple-system,
+      sans-serif;
   }
 
   .canvas {
