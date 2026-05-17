@@ -1,4 +1,8 @@
 ---
+import { Image } from "astro:assets";
+import ImgPersona from "../assets/fercho_persona.png";
+import ImgEmpresa from "../assets/fercho_empresa.png";
+
 interface MiniServicio {
     nombre: string;
     detalle: string;
@@ -7,7 +11,7 @@ interface MiniServicio {
 interface Frame {
     id: string;
     titulo: string;
-    imagen?: string;
+    imagen?: ImageMetadata;
     alt?: string;
     servicios: MiniServicio[];
 }
@@ -23,7 +27,7 @@ const {
         {
             id: "personas",
             titulo: "Para Personas",
-            imagen: "src/assets/fercho_persona.png",
+            imagen: ImgPersona,
             alt: "Servicios para personas",
             servicios: [
                 {
@@ -51,7 +55,7 @@ const {
         {
             id: "empresas",
             titulo: "Para Empresas",
-            imagen: "src/assets/fercho_empresa.png",
+            imagen: ImgEmpresa,
             alt: "Servicios para empresas",
             servicios: [
                 {
@@ -92,7 +96,7 @@ const {
                         <div class="ns-cerrado">
                             <div class="ns-imagen-wrap">
                                 {frame.imagen ? (
-                                    <img
+                                    <Image
                                         src={frame.imagen}
                                         alt={frame.alt ?? frame.titulo}
                                         class="ns-img"
@@ -159,7 +163,8 @@ const {
 
     /* ── Sección ── */
     .ns-seccion {
-        width: 90%;
+        width: 100%;
+        margin: 0 auto;
         background-color: var(--ns-white);
     }
 
@@ -171,33 +176,37 @@ const {
 
     /* ── Título sección ── */
     .ns-titulo {
-        font-size: clamp(2.8rem, 5.5vw, 4rem);
-        font-weight: 600;
+        font-size: clamp(3rem, 6vw, 4.5rem);
+        font-weight: 700;
         color: #111827;
         text-align: center;
-        margin: 0 0 3rem;
+        margin: 0 0 4rem;
+        letter-spacing: -0.02em;
     }
 
     /* ── Grid de frames ── */
     .ns-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 3rem;
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
     /* ── Frame base ── */
     .ns-frame {
         position: relative;
-        border: 1.5px solid #d1d5db;
-        border-radius: 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 24px;
         aspect-ratio: 1 / 1;
         cursor: pointer;
         background: var(--ns-white);
-        transition: box-shadow 0.25s ease;
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
     }
 
     .ns-frame:hover {
-        box-shadow: 0 6px 24px rgba(75, 15, 171, 0.15);
+        box-shadow: 0 12px 40px rgba(75, 15, 171, 0.12);
+        border-color: #d1d5db;
     }
 
     /* ── Estado CERRADO ── */
@@ -242,10 +251,12 @@ const {
     }
 
     .ns-label {
-        font-size: clamp(1.3rem, 2.2vw, 1.6rem);
-        font-weight: 700;
-        color: var(--ns-red);
-        letter-spacing: 0.01em;
+        font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+        font-weight: 800;
+        color: var(--ns-purple);
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        margin-top: 1rem;
     }
 
     /* ── Estado ABIERTO (glassmorphism) ── */
@@ -279,12 +290,13 @@ const {
     }
 
     .ns-label-glass {
-        font-size: 2rem;
-        font-weight: 700;
+        font-size: 2.2rem;
+        font-weight: 800;
         color: var(--ns-amber);
-        margin: 0 0 0.25rem;
+        margin: 0 0 1rem;
         letter-spacing: 0.02em;
         text-align: center;
+        text-transform: uppercase;
     }
 
     /* ── Lista de mini servicios ── */
@@ -301,12 +313,12 @@ const {
     /* ── Cada mini servicio ── */
     .ns-item {
         position: relative;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.22);
-        border-radius: 10px;
-        padding: 0.7rem 1rem;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 12px;
+        padding: 1rem 1.2rem;
         cursor: default;
-        transition: background 0.2s ease;
+        transition: background 0.3s ease;
         flex: 1;
         display: flex;
         align-items: center;
@@ -314,38 +326,37 @@ const {
     }
 
     .ns-item:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.22);
     }
 
     .ns-nombre {
-        font-size: 1.5rem;
-        font-weight: 600;
+        font-size: 1.6rem;
+        font-weight: 700;
         color: var(--ns-white);
         pointer-events: none;
         text-align: center;
+        line-height: 1.3;
     }
 
     /* ── Tooltip de detalle ── */
     .ns-tooltip {
         position: absolute;
-        bottom: calc(100% + 10px);
+        bottom: calc(100% + 15px);
         left: 50%;
         transform: translateX(-50%) translateY(6px);
         width: max-content;
-        max-width: 260px;
+        max-width: 320px;
         background: var(--ns-purple-dark);
         color: var(--ns-white);
-        font-size: 0.88rem;
+        font-size: 1.1rem;
         line-height: 1.5;
-        padding: 0.7rem 1rem;
-        border-radius: 10px;
+        padding: 1rem 1.4rem;
+        border-radius: 12px;
         border: 1px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
         opacity: 0;
         pointer-events: none;
-        transition:
-            opacity 0.2s ease,
-            transform 0.2s ease;
+        transition: opacity 0.2s ease, transform 0.2s ease;
         z-index: 10;
         text-align: center;
     }
@@ -390,16 +401,44 @@ const {
     }
 
     /* ── Responsive ── */
+    @media (max-width: 768px) {
+        .ns-grid {
+            grid-template-columns: 1fr;
+        }
+        .ns-label {
+            font-size: 2.2rem;
+        }
+        .ns-img {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+        }
+        .ns-nombre {
+            font-size: 1rem;
+        }
+    }
+
     @media (max-width: 600px) {
         .ns-contenedor {
             padding: 2.5rem 1.25rem 3rem;
         }
+        .ns-frame {
+            aspect-ratio: auto;
+            min-height: 520px;
+        }
         .ns-titulo {
-            font-size: 2.4rem;
+            font-size: 3rem;
+        }
+        .ns-label-glass {
+            font-size: 1.8rem;
+        }
+        .ns-nombre {
+            font-size: 1rem;
         }
         .ns-tooltip {
-            max-width: 190px;
-            font-size: 0.8rem;
+            max-width: 240px;
+            font-size: 1rem;
+            padding: 0.8rem 1rem;
         }
     }
 </style>

@@ -138,6 +138,15 @@ import PhoneImage from "../assets/phone-image.jpeg";
       }
     }
   });
+
+  // Cerrar menú móvil al hacer click
+  const menuCheckbox = document.getElementById('menu-toggle') as HTMLInputElement;
+  const navLinks = document.querySelectorAll('.nav-link');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (menuCheckbox) menuCheckbox.checked = false;
+    });
+  });
 </script>
 
 <style>
@@ -558,6 +567,25 @@ import PhoneImage from "../assets/phone-image.jpeg";
       gap: 30px;
       transition: left 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
       z-index: 200;
+      margin: 0;
+    }
+
+    /* Evitar que los estilos del header sticky rompan el menú en móvil */
+    .ui-elements.sticky .nav {
+      position: absolute;
+      top: -10px;
+      left: 100vw;
+      width: 100vw;
+      height: 100vh;
+      background-color: #360c75;
+      margin: 0;
+      flex-direction: column;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .ui-elements.sticky .menu-checkbox:checked ~ .nav {
+      left: -5vw;
     }
 
     .nav-link {
