@@ -5,6 +5,7 @@ import Iso from "../assets/iso_negro_bold.png";
 import Logo from "../assets/logo_negro_bold.png";
 import Hand from "../assets/mobile-hand.png";
 import Pet from "../assets/pet-tucuate.png";
+import PhoneImage from "../assets/phone-image.jpeg";
 ---
 
 <section class="hero-section" id="inicio">
@@ -67,7 +68,10 @@ import Pet from "../assets/pet-tucuate.png";
   <div class="content-wrapper">
     <!-- Oculto en móviles también -->
     <div class="clipped-content desktop-only">
-      <Image src={Hand} alt="Mano con celular" class="hand" />
+      <div class="hand-wrapper">
+		  <Image src={PhoneImage} alt="App en celular" class="phone-screen" />
+		  <Image src={Hand} alt="Mano con celular" class="hand" />
+      </div>
     </div>
 
     <div class="ui-elements">
@@ -119,7 +123,7 @@ import Pet from "../assets/pet-tucuate.png";
 <script>
   window.addEventListener('scroll', () => {
     // Parallax para la mano
-    const hand = document.querySelector<HTMLElement>('.hand');
+    const hand = document.querySelector<HTMLElement>('.hand-wrapper');
     if (hand && window.innerWidth > 768) {
       const scrollY = window.scrollY;
       hand.style.transform = `translateY(${scrollY * 0.3}px)`;
@@ -272,13 +276,33 @@ import Pet from "../assets/pet-tucuate.png";
     transition: all 0.3s ease;
   }
 
-  .hand {
+  .hand-wrapper {
     position: absolute;
     right: 7%;
     bottom: 10%;
     width: 50em;
     height: auto;
     z-index: 100;
+  }
+
+  .hand {
+    position: relative;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .phone-screen {
+    position: absolute;
+    top: 5.5%;
+    left: 23.5%;
+    width: 48.5%;
+    height: 74%;
+	padding: 4em 7em;
+    border-radius: 2em; /* Bordes redondeados de la pantalla */
+    z-index: 10; /* Va detrás de la imagen de la mano (asumiendo fondo transparente) */
+    object-fit: cover;
   }
 
   .nav {
