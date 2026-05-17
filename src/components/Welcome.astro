@@ -7,7 +7,7 @@ import Hand from "../assets/mobile-hand.png";
 import Pet from "../assets/pet-tucuate.png";
 ---
 
-<section class="hero-section">
+<section class="hero-section" id="inicio">
   <div class="canvas">
   <!-- El SVG ahora tiene una clase específica para ocultarlo en móviles -->
   <svg
@@ -82,16 +82,15 @@ import Pet from "../assets/pet-tucuate.png";
       </label>
 
       <nav class="nav">
-        <a class="nav-link" href="">Inicio</a>
-        <a class="nav-link" href="">Entregas</a>
-        <a class="nav-link" href="">Contacto</a>
-        <a class="nav-link" href="">Acerca de</a>
-        <!-- Duplicamos el botón de recarga dentro del menú móvil para mejorar UX -->
-        <a href="" class="nav-link mobile-only menu-pill">Puntos de recarga</a>
+        <a class="nav-link" href="#inicio">Inicio</a>
+        <a class="nav-link" href="#acerca-de">Acerca de</a>
+        <a class="nav-link" href="#ventajas">Ventajas</a>
+        <a class="nav-link" href="#entregas">Nuestros Servicios</a>
+        <a class="nav-link" href="#contacto">Contacto</a>
       </nav>
 
       <div class="pill pill-orange desktop-only">
-        <a href="" class="pill-link">Puntos de recarga</a>
+        <a href="#puntos-recarga" class="pill-link">Puntos de recarga</a>
       </div>
     </div>
 
@@ -116,6 +115,27 @@ import Pet from "../assets/pet-tucuate.png";
   </div>
 </div>
 </section>
+
+<script>
+  window.addEventListener('scroll', () => {
+    // Parallax para la mano
+    const hand = document.querySelector<HTMLElement>('.hand');
+    if (hand && window.innerWidth > 768) {
+      const scrollY = window.scrollY;
+      hand.style.transform = `translateY(${scrollY * 0.3}px)`;
+    }
+
+    // Navbar sticky
+    const uiElements = document.querySelector('.ui-elements');
+    if (uiElements) {
+      if (window.scrollY > 80) {
+        uiElements.classList.add('sticky');
+      } else {
+        uiElements.classList.remove('sticky');
+      }
+    }
+  });
+</script>
 
 <style>
   * {
@@ -189,6 +209,45 @@ import Pet from "../assets/pet-tucuate.png";
     margin-top: 15px;
     padding: 0 40px;
     z-index: 200;
+    transition: all 0.3s ease;
+  }
+
+  .ui-elements.sticky {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 100px;
+    z-index: 1000;
+    margin-top: 0;
+    padding: 0 10px;
+  }
+
+  .ui-elements.sticky .nav {
+    position: static;
+    width: auto;
+    flex: 1;
+    justify-content: center;
+    gap: 20px;
+    background-color: transparent;
+    margin: 0 20px;
+  }
+
+  .ui-elements.sticky .iso {
+    position: static;
+    width: 100px;
+    margin-left: 10px;
+  }
+
+  .ui-elements.sticky .pill-orange {
+    position: static;
+    width: 12em;
+    margin-right: 10px;
   }
 
   /* Control de visibilidad del menú hamburguesa */
@@ -233,6 +292,7 @@ import Pet from "../assets/pet-tucuate.png";
     display: flex;
     justify-content: space-around;
     align-items: center;
+    transition: all 0.3s ease;
   }
 
   .nav-link {
@@ -253,6 +313,7 @@ import Pet from "../assets/pet-tucuate.png";
     left: 4%;
     width: 120px;
     height: auto;
+    transition: all 0.3s ease;
   }
 
   .pet {
@@ -307,6 +368,7 @@ import Pet from "../assets/pet-tucuate.png";
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 0.3s ease;
   }
 
   .pill-link {
@@ -410,8 +472,34 @@ import Pet from "../assets/pet-tucuate.png";
     }
 
     .ui-elements {
+      position: relative;
+      width: 100%;
+      height: auto;
       padding: 0;
       margin-top: 5px;
+      background-color: transparent;
+      border-radius: 0;
+      top: auto;
+      left: auto;
+      transform: none;
+    }
+    
+    .ui-elements.sticky {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90vw;
+      padding: 10px 20px;
+      border-radius: 100px;
+      background-color: rgba(54, 12, 117, 0.95);
+      z-index: 1000;
+    }
+
+    .ui-elements.sticky .iso {
+      filter: brightness(0) invert(1);
+      position: static;
+      margin: 0;
     }
 
     .iso {
