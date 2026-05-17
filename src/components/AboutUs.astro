@@ -1,0 +1,165 @@
+---
+interface Props {
+  titulo?: string;
+  descripcion?: string[];
+}
+
+const {
+  titulo = "Acerca de nosotros",
+  descripcion = [
+    '“Tu Cuate” es una plataforma digital que te permite generar ingresos recargando saldo para teléfonos móviles de manera rápida, sencilla y desde cualquier lugar.',
+  ],
+} = Astro.props;
+---
+
+<section class="sobre-nosotros">
+  <div class="tarjeta">
+    <h2 class="titulo" id="typing-titulo"></h2>
+    <div class="contenido" id="typing-contenido"></div>
+  </div>
+</section>
+
+<script define:vars={{ titulo, descripcion }}>
+  // --- Configuración de velocidad ---
+  const TITULO_SPEED = 55;   // ms por carácter en el título
+  const PARRAFO_SPEED = 22;  // ms por carácter en los párrafos
+  const PAUSA_ENTRE = 180;   // ms de pausa entre bloques
+
+  const tituloEl = document.getElementById("typing-titulo");
+  const contenidoEl = document.getElementById("typing-contenido");
+
+  // Crea los párrafos vacíos de antemano (en gris) para reservar el espacio
+  const parrafosEl = descripcion.map(() => {
+    const p = document.createElement("p");
+    p.className = "parrafo";
+    // Coloca el texto completo en gris claro como "fantasma"
+    p.dataset.texto = "";
+    contenidoEl.appendChild(p);
+    return p;
+  });
+
+  // Escribe un string carácter a carácter en un elemento
+  function escribir(elemento, texto, velocidad) {
+    return new Promise((resolve) => {
+      let i = 0;
+      function siguiente() {
+        if (i < texto.length) {
+          elemento.textContent += texto[i];
+          i++;
+          setTimeout(siguiente, velocidad);
+        } else {
+          resolve();
+        }
+      }
+      siguiente();
+    });
+  }
+
+  async function iniciarEscritura() {
+    // 1. Escribe el título con cursor parpadeante
+    await escribir(tituloEl, titulo, TITULO_SPEED);
+
+    // Quita el cursor del título al terminar
+    tituloEl.classList.add("sin-cursor");
+    await new Promise((r) => setTimeout(r, PAUSA_ENTRE));
+
+    // 2. Escribe cada párrafo en secuencia
+    for (let i = 0; i < descripcion.length; i++) {
+      parrafosEl[i].classList.add("activo");
+      await escribir(parrafosEl[i], descripcion[i], PARRAFO_SPEED);
+      await new Promise((r) => setTimeout(r, PAUSA_ENTRE / 2));
+    }
+  }
+
+  // Arranca cuando el componente entra en el viewport
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        observer.disconnect();
+        iniciarEscritura();
+      }
+    },
+    { threshold: 0.2 }
+  );
+
+  observer.observe(document.querySelector(".tarjeta"));
+</script>
+
+<style>
+  .sobre-nosotros {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    background-color: #ffffff;
+  }
+
+  .tarjeta {
+    width: 100%;
+    max-width: 860px;
+    border: 1.5px solid #d1d5db;
+    border-radius: 14px;
+    padding: 3rem 3.5rem 3.5rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  /* ── Título ── */
+  .titulo {
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    font-weight: 600;
+    color: #111827;
+    text-align: center;
+    margin: 0 0 2rem 0;
+    letter-spacing: 0.01em;
+    min-height: 1.3em;
+
+    /* Cursor parpadeante mientras escribe */
+    border-right: 3px solid #111827;
+    animation: parpadeo 0.75s step-end infinite;
+  }
+
+  .titulo.sin-cursor {
+    border-right: none;
+    animation: none;
+  }
+
+  /* ── Párrafos ── */
+  .contenido {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .parrafo {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    font-weight: 400;
+    /* Gris claro como "fantasma" antes de escribirse, igual que en la imagen */
+    color: #d1d5db;
+    margin: 0;
+    transition: color 0.25s ease;
+  }
+
+  /* Al activarse pasa a color oscuro legible */
+  .parrafo.activo {
+    color: #1f2937;
+  }
+
+  @keyframes parpadeo {
+    0%, 100% { border-color: #111827; }
+    50%       { border-color: transparent; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .tarjeta {
+      padding: 2rem 1.5rem 2.5rem;
+    }
+    .titulo {
+      font-size: 2.2rem;
+    }
+    .parrafo {
+      font-size: 1rem;
+    }
+  }
+</style>

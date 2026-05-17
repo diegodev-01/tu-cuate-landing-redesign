@@ -25,3 +25,11 @@ html, body {
     font-family: 'optika', sans-serif, inter;
     font-weight: normal;
 }
+
+body {
+     display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
