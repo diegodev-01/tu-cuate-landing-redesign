@@ -10,23 +10,23 @@ import PhoneImage from "../assets/phone-image.jpeg";
 
 <section class="hero-section" id="inicio">
   <div class="canvas">
-  <!-- El SVG ahora tiene una clase específica para ocultarlo en móviles -->
-  <svg
-    class="shape-background desktop-only"
-    viewBox="0 0 800 500"
-    preserveAspectRatio="none"
-  >
-    <defs>
-      <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="32.32%" stop-color="#360c75"></stop>
-        <stop offset="60.19%" stop-color="#360c75" stop-opacity="0.88"></stop>
-        <stop offset="93.99%" stop-color="#360c75" stop-opacity="0.74"></stop>
-      </linearGradient>
+    <!-- El SVG ahora tiene una clase específica para ocultarlo en móviles -->
+    <svg
+      class="shape-background desktop-only"
+      viewBox="0 0 800 500"
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="32.32%" stop-color="#360c75"></stop>
+          <stop offset="60.19%" stop-color="#360c75" stop-opacity="0.88"></stop>
+          <stop offset="93.99%" stop-color="#360c75" stop-opacity="0.74"></stop>
+        </linearGradient>
 
-      <clipPath id="svgClip" clipPathUnits="objectBoundingBox">
-        <path
-          transform="scale(0.00125, 0.002)"
-          d="
+        <clipPath id="svgClip" clipPathUnits="objectBoundingBox">
+          <path
+            transform="scale(0.00125, 0.002)"
+            d="
             M 120 20 
             H 760 A 20 20 0 0 1 780 40 
             V 360 A 20 20 0 0 1 760 380 
@@ -39,12 +39,12 @@ import PhoneImage from "../assets/phone-image.jpeg";
             H 80 A 20 20 0 0 0 100 40 
             A 20 20 0 0 1 120 20 
             Z"
-        ></path>
-      </clipPath>
-    </defs>
+          ></path>
+        </clipPath>
+      </defs>
 
-    <path
-      d="
+      <path
+        d="
         M 120 20 
         H 760 A 20 20 0 0 1 780 40 
         V 360 A 20 20 0 0 1 760 380 
@@ -57,93 +57,95 @@ import PhoneImage from "../assets/phone-image.jpeg";
         H 80 A 20 20 0 0 0 100 40 
         A 20 20 0 0 1 120 20 
         Z"
-      class="shape-path"
-      stroke-width="1"
-      stroke-linejoin="round"
-      vector-effect="non-scaling-stroke"
-    >
-    </path>
-  </svg>
+        class="shape-path"
+        stroke-width="1"
+        stroke-linejoin="round"
+        vector-effect="non-scaling-stroke"
+      >
+      </path>
+    </svg>
 
-  <div class="content-wrapper">
-    <!-- Oculto en móviles también -->
-    <div class="clipped-content desktop-only">
-      <div class="hand-wrapper">
-		  <Image src={Hand} alt="Mano con celular" class="hand" />
+    <div class="content-wrapper">
+      <!-- Oculto en móviles también -->
+      <div class="clipped-content desktop-only">
+        <div class="hand-wrapper">
+          <Image src={Hand} alt="Mano con celular" class="hand" />
+        </div>
       </div>
-    </div>
 
-    <div class="ui-elements">
-      <Image src={Iso} alt="Iso Tu Cuate" class="iso" />
+      <div class="ui-elements">
+        <Image src={Iso} alt="Iso Tu Cuate" class="iso" />
 
-      <!-- Menú Hamburguesa con CSS Puro -->
-      <input type="checkbox" id="menu-toggle" class="menu-checkbox" />
-      <label for="menu-toggle" class="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </label>
+        <!-- Menú Hamburguesa con CSS Puro -->
+        <input type="checkbox" id="menu-toggle" class="menu-checkbox" />
+        <label for="menu-toggle" class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
 
-      <nav class="nav">
-        <a class="nav-link" href="#inicio">Inicio</a>
-        <a class="nav-link" href="#acerca-de">Acerca de</a>
-        <a class="nav-link" href="#ventajas">Ventajas</a>
-        <a class="nav-link" href="#entregas">Nuestros Servicios</a>
-        <a class="nav-link" href="#contacto">Contacto</a>
-      </nav>
+        <nav class="nav">
+          <a class="nav-link" href="#inicio">Inicio</a>
+          <a class="nav-link" href="#acerca-de">Acerca de</a>
+          <a class="nav-link" href="#ventajas">Ventajas</a>
+          <a class="nav-link" href="#entregas">Nuestros Servicios</a>
+          <a class="nav-link" href="#contacto">Contacto</a>
+        </nav>
 
-      <div class="pill pill-orange desktop-only">
-        <a href="#puntos-recarga" class="pill-link">Puntos de recarga</a>
+        <div class="pill pill-orange desktop-only">
+          <a href="#puntos-recarga" class="pill-link">Puntos de recarga</a>
+        </div>
       </div>
-    </div>
 
-    <div class="hero-content">
-      <Image src={Logo} alt="Logo Grande Tu Cuate" class="hero-logo" />
-      <p class="hero-description">
-        Tu plataforma digital para revender y generar ingresos desde donde
-        estés.
+      <div class="hero-content">
+        <Image src={Logo} alt="Logo Grande Tu Cuate" class="hero-logo" />
+        <p class="hero-description">
+          Tu plataforma digital para revender y generar ingresos desde donde
+          estés.
+        </p>
+        <div class="hero-buttons">
+          <a href="#" class="btn-outline">Descarga la app</a>
+          <a href="#" class="btn-outline">Accede a la web</a>
+        </div>
+      </div>
+      <Image src={Pet} alt="Mascota Tu Cuate" class="pet" />
+
+      <p class="branding">
+        Desliza y descubre mas de
+        <Image src={Logo} alt="Logo Tu Cuate" class="logo" />
       </p>
-      <div class="hero-buttons">
-        <a href="#" class="btn-outline">Descarga la app</a>
-        <a href="#" class="btn-outline">Accede a la web</a>
-      </div>
+      <p class="slogan">Recarga, crece y comparte</p>
     </div>
-    <Image src={Pet} alt="Mascota Tu Cuate" class="pet" />
-
-    <p class="branding">
-      Desliza y descubre mas de
-      <Image src={Logo} alt="Logo Tu Cuate" class="logo" />
-    </p>
-    <p class="slogan">Recarga, crece y comparte</p>
   </div>
-</div>
 </section>
 
 <script>
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     // Parallax para la mano
-    const hand = document.querySelector<HTMLElement>('.hand-wrapper');
+    const hand = document.querySelector<HTMLElement>(".hand-wrapper");
     if (hand && window.innerWidth > 768) {
       const scrollY = window.scrollY;
       hand.style.transform = `translateY(${scrollY * 0.3}px)`;
     }
 
     // Navbar sticky
-    const uiElements = document.querySelector('.ui-elements');
+    const uiElements = document.querySelector(".ui-elements");
     if (uiElements) {
       if (window.scrollY > 80) {
-        uiElements.classList.add('sticky');
+        uiElements.classList.add("sticky");
       } else {
-        uiElements.classList.remove('sticky');
+        uiElements.classList.remove("sticky");
       }
     }
   });
 
   // Cerrar menú móvil al hacer click
-  const menuCheckbox = document.getElementById('menu-toggle') as HTMLInputElement;
-  const navLinks = document.querySelectorAll('.nav-link');
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
+  const menuCheckbox = document.getElementById(
+    "menu-toggle"
+  ) as HTMLInputElement;
+  const navLinks = document.querySelectorAll(".nav-link");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
       if (menuCheckbox) menuCheckbox.checked = false;
     });
   });
@@ -162,10 +164,7 @@ import PhoneImage from "../assets/phone-image.jpeg";
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family:
-      system-ui,
-      -apple-system,
-      sans-serif;
+    font-family: system-ui, -apple-system, sans-serif;
   }
 
   .canvas {
@@ -307,7 +306,7 @@ import PhoneImage from "../assets/phone-image.jpeg";
     left: 23.5%;
     width: 48.5%;
     height: 74%;
-	padding: 4em 7em;
+    padding: 4em 7em;
     border-radius: 2em; /* Bordes redondeados de la pantalla */
     z-index: 10; /* Va detrás de la imagen de la mano (asumiendo fondo transparente) */
     object-fit: cover;
@@ -479,8 +478,8 @@ import PhoneImage from "../assets/phone-image.jpeg";
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 80vw;
-      height: auto;
+      width: auto;
+      height: 60%;
       z-index: 100;
     }
     .canvas {
@@ -515,7 +514,7 @@ import PhoneImage from "../assets/phone-image.jpeg";
       left: auto;
       transform: none;
     }
-    
+
     .ui-elements.sticky {
       position: fixed;
       top: 10px;
@@ -676,6 +675,19 @@ import PhoneImage from "../assets/phone-image.jpeg";
       font-size: 1.5em;
       margin-top: 10px;
       padding-bottom: 10px;
+    }
+
+    @media screen and (max-height: 670px) {
+      .pet {
+        display: block;
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto;
+        height: 30%;
+        z-index: 100;
+      }
     }
   }
 </style>
